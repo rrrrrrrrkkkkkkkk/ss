@@ -1,0 +1,24 @@
+﻿@page "/state-street"
+<h3>StateStreet</h3>
+
+@using SS.App.Data;
+@inject SsDataService DataService
+
+@if (data == null)
+{
+    <p>loading...</p>
+}
+else
+{
+    <p>data</p>
+}
+
+@code {
+    private SSData[] data = null;
+
+    protected override async Task OnInitializedAsync()
+    {
+        data = (await DataService.GetAsync()).ToArray();
+    }
+
+}
