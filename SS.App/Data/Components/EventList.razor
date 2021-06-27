@@ -1,0 +1,28 @@
+﻿@using SS.Events
+<table class="table.small">
+    <thead>
+    <tr>
+        <th>Event-Name</th>
+        <th>Start-Date</th>
+        <th>End-Date</th>
+        <th>Event-Description</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var ev in Events)
+    {
+        <tr>
+            <td>@ev.Name</td>
+            <td>@ev.Start</td>
+            <td>@ev.End</td>
+            <td>@ev.Description</td>
+        </tr>
+    }
+    </tbody>
+
+    @*TODO: Should there be any placeholder for empty collection?*@
+</table>
+@code {
+    [Parameter]
+    public List<EventModel> Events { get; set; }
+}

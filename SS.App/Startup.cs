@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SS.App.Data;
+using SS.Events;
 
 namespace SS.App
 {
@@ -23,7 +24,9 @@ namespace SS.App
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
-            services.AddSingleton<SsDataService>();
+            services
+                .AddScoped<EventDataService>()
+                .AddScoped<EventDataParser>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

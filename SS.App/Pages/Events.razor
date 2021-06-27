@@ -1,0 +1,57 @@
+﻿@page "/events"
+<h3>Events</h3>
+
+@using SS.App.Data;
+@using System.Threading
+@inject EventDataService _eventDataService
+@using SS.App.Data.Components;
+
+@if (_error != null) {
+    <div class="alert alert-danger" role="alert">
+        @_error
+    </div>
+}
+
+@if (!_loaded)
+{
+<InputFile OnChange="LoadEventsAsync">Load files</InputFile>
+}
+else if (_loaded)
+{
+    <EventList Events="@_events" />
+}
+
+@code {
+    private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
+    private List<EventModel> _events = null;
+    private bool _loaded = false;
+    private string _error;
+
+    public void Dispose()
+    {
+        _cancellationTokenSource.Cancel();
+        _cancellationTokenSource.Dispose();
+    }
+
+    private async Task LoadEventsAsync(InputFileChangeEventArgs file)
+    {
+        _error = null;
+        _events = new List<EventModel>();
+
+        try
+        {
+            await foreach (var ev in _eventDataService.LoadEventsAsync(file.File, _cancellationTokenSource.Token))
+            {
+                _events.Add(ev);
+                this.StateHasChanged();
+            }
+            
+            _loaded = true;
+        }
+        catch (EventDataException ex)
+        {
+            _error = ex.Message;
+        }
+    }
+
+}
