@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Microsoft.AspNetCore.Components.Forms;
 using SS.Events;
@@ -13,7 +14,7 @@ namespace SS.App.Data
 
         public EventDataService(EventDataParser parser) => _parser = parser;
 
-        public async IAsyncEnumerable<EventModel> LoadEventsAsync(IBrowserFile file, CancellationToken cancellationToken)
+        public async IAsyncEnumerable<EventModel> LoadEventsAsync(IBrowserFile file, [EnumeratorCancellation]CancellationToken cancellationToken)
         {
             if (file.Size > 3 * 1024 * 1024)
             {

@@ -23,7 +23,6 @@ namespace SS.App
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
             services
                 .AddScoped<EventDataService>()
                 .AddScoped<EventDataParser>();

@@ -1,4 +1,4 @@
-﻿@page "/events"
+﻿@page "/"
 <h3>Events</h3>
 
 @using SS.App.Data;
@@ -45,7 +45,7 @@ else if (_loaded)
                 _events.Add(ev);
                 this.StateHasChanged();
             }
-            
+
             _loaded = true;
         }
         catch (EventDataException ex)
